@@ -32,8 +32,8 @@
                                 <td>{{$brand->slug}}</td>
                                 <td>{{$brand->status == 1 ? 'Hidden':'visible'}}</td>
                                 <td>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#updateBrandModel"  class="btn btn-success">Edit</a>
-                                    <a href="" class="btn btn-danger">Delete</a>
+                                    <a href="#" wire:click ="editBrand({{$brand->id}})"  data-bs-toggle="modal" data-bs-target="#updateBrandModel"  class="btn btn-success">Edit</a>
+                                    <a href="" wire:click = "deleteBrand({{$brand->id}})" data-bs-toggle="modal" data-bs-target="#deleteBrandModel" class="btn btn-danger">Delete</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -50,6 +50,8 @@
     <script>
         window.addEventListener('close-modal',event=>{
             $('#addBrandModel').modal('hide');
+            $('#updateBrandModel').modal('hide');
+            $('#deleteBrandModel').modal('hide');
         });
     </script>
 
