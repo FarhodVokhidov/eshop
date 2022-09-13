@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
                     @if(session('message'))
-                        <h4 class="alert-success alert " >{{session('message')}}</h4>
+                        <h4 class="alert-success alert ">{{session('message')}}</h4>
                     @endif
                     @if($errors->any())
                         <div class="alert alert-warning">
@@ -181,11 +181,13 @@
                                     @if($product->productImages)
                                         <div class="row">
                                             @foreach($product->productImages as $image)
-                                            <div class="col-md-2">
-                                                <img src="{{asset($image->image)}}" style="width: 120px;height: 140px"
-                                                     class="border shadow" alt="">
-                                                <a href="{{url('admin/product-image/'.$image->id.'/delete')}}" class="btn btn-danger btn-sm">Remove</a>
-                                            </div>
+                                                <div class="col-md-2">
+                                                    <img src="{{asset($image->image)}}"
+                                                         style="width: 120px;height: 140px"
+                                                         class="border shadow" alt="">
+                                                    <a href="{{url('admin/product-image/'.$image->id.'/delete')}}"
+                                                       class="btn btn-danger btn-sm">Remove</a>
+                                                </div>
                                             @endforeach
                                         </div>
                                     @else
@@ -197,32 +199,122 @@
                                  aria-labelledby="color-tab"
                                  tabindex="0">
                                 <div class="mb-3">
-                                    <lable>Upload Product Image</lable>
-                                    <input type="file" name="image[]" multiple class="form-control shadow">
-                                </div>
-                                <div>
-                                    @if($product->productImages)
-                                        <div class="row">
-                                            @foreach($product->productImages as $image)
-                                            <div class="col-md-2">
-                                                <img src="{{asset($image->image)}}" style="width: 120px;height: 140px"
-                                                     class="border shadow" alt="">
-                                                <a href="{{url('admin/product-image/'.$image->id.'/delete')}}" class="btn btn-danger btn-sm">Remove</a>
+                                    <h4>Add Prodcut Color</h4>
+                                    <lable>Select Color</lable>
+                                    <hr/>
+                                    <div class="row">
+                                        @forelse($colors as $color)
+                                            <div class="p-2 border mb-3">
+                                                <div class="col-md-3">
+                                                    Color :<input type="checkbox" name="colors[{{$color->id}}]"
+                                                                  value="{{$color->id}}">{{$color->name}}
+                                                    <br>
+                                                    Quantity: <input type="number" name="colorquantity[{{$color->id}}]"
+                                                                     style="width:70px;border:1px solid black">
+                                                </div>
                                             </div>
-                                            @endforeach
-                                        </div>
-                                    @else
-                                        <h5>No images</h5>
-                                    @endif
+                                        @empty
+                                            <div class="col-md-12">
+                                                <h1>No color Found</h1>
+                                            </div>
+                                        @endforelse
+                                    </div>
+                                </div>
+                                <div class="table-responsive ">
+                                    <table class="table table-sm table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Color name</th>
+                                            <th>quantity</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($product->prodcutColors as $prodColor)
+                                            <tr class="product-color-tr">
+                                                <td>
+                                                    @if($prodColor->color)
+                                                        {{$prodColor->color->name}}
+                                                    @else
+                                                        No color Found
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <div class="input-group mb-3" style="width: 150px;">
+                                                        <input type="number" value="{{$prodColor->quantity}}"
+                                                               class="productColorQuantity form-control form-control-sm">
+                                                        <button type="button" value="{{$prodColor->id}}"
+                                                                class="updateProductColorBtn btn btn-primary btn-sm text-white">
+                                                            Update
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <button type="button" value="{{$prodColor->id}}"
+                                                            class="deleteProductColorBtn btn btn-danger btn-sm text-white">
+                                                        Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <button class="btn btn-primary" type="submit">Update</button>
-                        </div>
+                            <div>
+                                <button class="btn btn-primary" type="submit">Update</button>
+                            </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+@section('scripts')
+    <script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $(document).on('click', '.updateProductColorBtn', function () {
+                var prodcut_id = "{{$product->id}}";
+                var product_color_id = $(this).val()
+                var qty = $(this).closest('.product-color-tr').find('.productColorQuantity').val();
+                if (qty <= 0) {
+                    alert('quantity is required')
+                    return false
+                }
+                var data = {
+                    'prodcut_id': prodcut_id,
+                    'qty': qty
+                };
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/product-color/" + product_color_id,
+                    data: data,
+                    success: function (response) {
+                        alert(response.message)
+                    }
+                });
+            });
+
+            $(document).on('click', '.deleteProductColorBtn', function () {
+                var product_color_id = $(this).val();
+                var thisClick= $(this);
+
+                $.ajax({
+                    type: "GET",
+                    url: "/admin/product-color/"+ product_color_id + "/delete",
+                    success: function (response) {
+                        thisClick.closest('.product-color-tr').remove();
+                        alert(response.message);
+                    }
+                });
+            });
+
+        });
+    </script>
+@endsection
+

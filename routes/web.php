@@ -38,6 +38,8 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
         Route::put('/product/{product}','update')->name('admin.product.update');
         Route::get('/product-image/{product_image_id}/delete','destroyImage')->name('admin.product.image.destroy');
         Route::get('/product/{product_id}/delete','destroy')->name('admin.product.destroy');
+        Route::post('/product-color/{product_color_id}','updateProductColorQty');
+        Route::get('/product-color/{product_color_id}/delete','deleteProductColor');
     });
     Route::controller(\App\Http\Controllers\Admin\ColorController::class)->group(function (){
         Route::get('/colors','index')->name('admin.color');
