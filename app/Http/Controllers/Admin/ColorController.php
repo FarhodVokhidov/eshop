@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ColorFormRequest;
 use App\Models\Color;
 use Illuminate\Http\Request;
 
-class ColorCantroller extends Controller
+class ColorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,8 @@ class ColorCantroller extends Controller
      */
     public function index()
     {
-        //
+        $colors = Color::all();
+        return view('admin.colors.index',compact('colors'));
     }
 
     /**
@@ -25,7 +27,7 @@ class ColorCantroller extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.colors.create');
     }
 
     /**
@@ -34,9 +36,16 @@ class ColorCantroller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ColorFormRequest $request)
     {
-        //
+        $color = $request->validated();
+        $colors=Color::query()->create([
+            'name'=>$color['name'],
+            'code'=>$color['code'],
+            'status'=>$request->status == true ?'1' : '0',
+        ]);
+        $colors->save();
+        return redirect('admin/colors')->with('message','Colors Added Successfully');
     }
 
     /**
@@ -47,7 +56,7 @@ class ColorCantroller extends Controller
      */
     public function show(Color $color)
     {
-        //
+
     }
 
     /**
@@ -58,7 +67,7 @@ class ColorCantroller extends Controller
      */
     public function edit(Color $color)
     {
-        //
+        return view('admin.colors.edit', compact('color'));
     }
 
     /**
@@ -68,9 +77,16 @@ class ColorCantroller extends Controller
      * @param  \App\Models\Color  $color
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Color $color)
+    public function update(ColorFormRequest $request, Color $color)
     {
-        //
+        $validatedData = $request->validated();
+        $colors = Color::query()->findOrFail($color->id);
+        $colors->update([
+            'name'=>$validatedData['name'],
+            'code'=>$validatedData['code'],
+            'status'=>$request->status == true? '1':'0',
+        ]);
+        return redirect('admin/colors')->with('message', 'Color Updated Successfully');
     }
 
     /**
@@ -81,6 +97,8 @@ class ColorCantroller extends Controller
      */
     public function destroy(Color $color)
     {
-        //
+        $color = Color::query()->find($color['id']);
+        $color->delete();
+        return redirect('admin/colors')->with('message','Colors Deleted Successfully');
     }
 }

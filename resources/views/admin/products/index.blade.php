@@ -41,7 +41,17 @@
                                     @endif
                                 </td>
                                 <td>{{$product->name}}</td>
-                                <td>{{$product->price}}</td>
+                                <td class="d-flex justify-content-between">@if($product->selling_price)
+                                        <div class="">
+                                            <h6>{{$product->selling_price}}</h6>
+                                        </div>
+                                        <div>
+                                               <h6 class="bg-google">Sale</h6>
+                                        </div>
+                                    @else
+                                                                                {{$product->original_price}}
+                                    @endif
+                                </td>
                                 <td>{{$product->quantity}}</td>
                                 <td>{{$product->status == '1' ? 'Hidden':'Visible'}}</td>
                                 <td>

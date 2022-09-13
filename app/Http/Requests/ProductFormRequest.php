@@ -31,7 +31,7 @@ class ProductFormRequest extends FormRequest
             'small_description'=>['required','string','max:255'],
             'description'=>['required'],
             'original_price'=>['required','integer'],
-            'selling_price'=>['required','integer'],
+            'selling_price'=>['integer'],
             'quantity'=>['required','integer'],
             'trending'=>['required'],
             'status'=>['required'],

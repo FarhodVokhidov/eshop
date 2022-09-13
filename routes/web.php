@@ -39,11 +39,13 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
         Route::get('/product-image/{product_image_id}/delete','destroyImage')->name('admin.product.image.destroy');
         Route::get('/product/{product_id}/delete','destroy')->name('admin.product.destroy');
     });
-    Route::controller(\App\Http\Controllers\Admin\ProductController::class)->group(function (){
-
-
-
-
+    Route::controller(\App\Http\Controllers\Admin\ColorController::class)->group(function (){
+        Route::get('/colors','index')->name('admin.color');
+        Route::get('/colors/create','create')->name('admin.color.create');
+        Route::post('/colors','store')->name('admin.colors.store');
+        Route::get('/colors/{color}/edit','edit')->name('admin.color.edit');
+        Route::put('/colors/{color}','update')->name('admin.color.update');
+        Route::get('/colors/{color}/delete','destroy')->name('admin.delete.destroy');
     });
         Route::get('/brands',App\Http\Livewire\Admin\Brand\Index::class)->name('admin.brands');
 });
