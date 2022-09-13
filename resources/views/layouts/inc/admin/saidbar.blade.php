@@ -19,6 +19,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{{route('admin.color')}}">
+                <i class="mdi mdi-chart-pie menu-icon"></i>
+                <span class="menu-title">Colors</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                 <i class="mdi mdi-account menu-icon"></i>
                 <span class="menu-title">Product</span>
@@ -26,8 +32,8 @@
             </a>
             <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{url('admin/products/create')}}"> Add Product </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="{{url('admin/products')}}"> View </a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('admin.product.create')}}"> Add Product </a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{route('admin.product')}}"> View </a></li>
                 </ul>
             </div>
         </li>

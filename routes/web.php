@@ -30,8 +30,20 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
         Route::get('/category/{category}/edit','edit');
         Route::put('/category/{category}','update');
     });
+    Route::controller(\App\Http\Controllers\Admin\ProductController::class)->group(function (){
+        Route::get('/product','index')->name('admin.product');
+        Route::get('/product/create','create')->name('admin.product.create');
+        Route::post('/product','store')->name('admin.product.store');
+        Route::get('/product/{product}/edit','edit')->name('admin.product.edit');
+        Route::put('/product/{product}','update')->name('admin.product.update');
+        Route::get('/product-image/{product_image_id}/delete','destroyImage')->name('admin.product.image.destroy');
+        Route::get('/product/{product_id}/delete','destroy')->name('admin.product.destroy');
+    });
+    Route::controller(\App\Http\Controllers\Admin\ProductController::class)->group(function (){
+
+
+
+
+    });
         Route::get('/brands',App\Http\Livewire\Admin\Brand\Index::class)->name('admin.brands');
-//    Route::get('category',[\App\Http\Controllers\Admin\CategoryController::class,'index'])->name('admin.category');
-//    Route::get('category/create',[\App\Http\Controllers\Admin\CategoryController::class,'create'])->name('admin.category.create');
-//    Route::post('category',[\App\Http\Controllers\Admin\CategoryController::class,'store'])->name('admin.category.store');
 });
