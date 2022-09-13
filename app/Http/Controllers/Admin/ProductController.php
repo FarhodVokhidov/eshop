@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductFormRequest;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
@@ -33,8 +34,9 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $colors = Color::query()->where('status','1')->get();
         $brands = Brand::all();
-        return view('admin.products.create', compact('categories', 'brands'));
+        return view('admin.products.create', compact('categories', 'brands','colors'));
     }
 
     /**
@@ -57,8 +59,8 @@ class ProductController extends Controller
             'original_price' => $validatedData['original_price'],
             'selling_price' => $validatedData['selling_price'],
             'quantity' => $validatedData['quantity'],
-            'trending' => $request->trending == true ? "1" : "0",
-            'status' => $request->status == true ? "1" : "0",
+            'trending' => $request->trending == true ? "0" : "1",
+            'status' => $request->status == true ? "0" : "1",
             'meta_title' => $validatedData['meta_title'],
             'meta_keyword' => $validatedData['meta_keyword'],
             'meta_description' => $validatedData['meta_description'],
@@ -77,6 +79,16 @@ class ProductController extends Controller
                     'product_id' => $product->id,
                     'image' => $finalImagePathName,
 
+                ]);
+            }
+        }
+
+        if($request->colors){
+            foreach ($request->colors as $key =>$color){
+                $product->prodcutColors()->create([
+                    'product_id' => $product->id,
+                    'color_id'=>$color,
+                    'quantity'=>$request->colorquantity[$key]?? 0,
                 ]);
             }
         }

@@ -84,7 +84,7 @@ class ColorController extends Controller
         $colors->update([
             'name'=>$validatedData['name'],
             'code'=>$validatedData['code'],
-            'status'=>$request->status == true? '1':'0',
+            'status'=>$request->status == true ? "1":"0",
         ]);
         return redirect('admin/colors')->with('message', 'Color Updated Successfully');
     }

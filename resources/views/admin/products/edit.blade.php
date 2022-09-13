@@ -50,6 +50,12 @@
                                         aria-controls="image-tab-pane" aria-selected="false">Product Image
                                 </button>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="color-tab" data-bs-toggle="tab"
+                                        data-bs-target="#color-tab-pane" type="button" role="tab"
+                                        aria-controls="color-tab-pane" aria-selected="false">Colors Product
+                                </button>
+                            </li>
                         </ul>
                         <div class="tab-content" cla id="myTabContent">
                             <div class="tab-pane fade border p-3 show active" id="home-tab-pane" role="tabpanel"
@@ -166,6 +172,29 @@
                             </div>
                             <div class="tab-pane fade border p-3" id="image-tab-pane" role="tabpanel"
                                  aria-labelledby="image-tab"
+                                 tabindex="0">
+                                <div class="mb-3">
+                                    <lable>Upload Product Image</lable>
+                                    <input type="file" name="image[]" multiple class="form-control shadow">
+                                </div>
+                                <div>
+                                    @if($product->productImages)
+                                        <div class="row">
+                                            @foreach($product->productImages as $image)
+                                            <div class="col-md-2">
+                                                <img src="{{asset($image->image)}}" style="width: 120px;height: 140px"
+                                                     class="border shadow" alt="">
+                                                <a href="{{url('admin/product-image/'.$image->id.'/delete')}}" class="btn btn-danger btn-sm">Remove</a>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <h5>No images</h5>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="tab-pane fade border p-3" id="color-tab-pane" role="tabpanel"
+                                 aria-labelledby="color-tab"
                                  tabindex="0">
                                 <div class="mb-3">
                                     <lable>Upload Product Image</lable>
