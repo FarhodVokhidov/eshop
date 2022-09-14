@@ -1,2 +1,3 @@
-web: vendor/bin/heroku-php-nginx public/
-worker: npm install && npm run dev
+web: npm install && npm run dev
+worker: vendor/bin/heroku-php-apache2 public/
+
