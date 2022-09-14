@@ -14,12 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Auth::routes();
+Route::get('/',[\App\Http\Controllers\Frontend\FortendController::class,'index']);
+Route::get('/collection',[App\Http\Controllers\Frontend\FortendController::class,'categories'])->name('categories');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/collection/{category_slug}',[App\Http\Controllers\Frontend\FortendController::class,'product_by_category'])->name('productcat');
 
 Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     Route::get('dashboard',[\App\Http\Controllers\Admin\DashboardController::class,'index'])->name('admin.home');
@@ -49,5 +52,14 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
         Route::put('/colors/{color}','update')->name('admin.color.update');
         Route::get('/colors/{color}/delete','destroy')->name('admin.delete.destroy');
     });
+    Route::controller(\App\Http\Controllers\Admin\SlideController::class)->group(function (){
+        Route::get('/sliders','index')->name('admin.sliders');
+        Route::get('/sliders/create','create')->name('admin.sliders.create');
+        Route::post('/sliders/create','store')->name('admin.sliders.store');
+        Route::get('/sliders/{sliders}/edit','edit')->name('admin.sliders.edit');
+        Route::put('/sliders/{slider}/update','update')->name('admin.sliders.update');
+        Route::get('/sliders/{slider}/delete','destroy')->name('admin.sliders.destroy');
+    });
+
         Route::get('/brands',App\Http\Livewire\Admin\Brand\Index::class)->name('admin.brands');
 });

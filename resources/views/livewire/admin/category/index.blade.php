@@ -53,7 +53,7 @@
                                 <td>{{$category->id}}</td>
                                 <td>{{$category->name}}</td>
                                 <td><img src="{{asset('upload/category/'.$category->image)}}" alt=""></td>
-                                <td>{{$category->status == '1'?'Hidden':'Visible' }}</td>
+                                <td>{{$category->status == '1'?'Visible':'Hidden' }}</td>
                                 <td>
                                     <a href="{{url('admin/category/'.$category->id.'/edit')}}"
                                        class="btn btn-success shadow">Edit</a>

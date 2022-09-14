@@ -37,5 +37,11 @@
                 </ul>
             </div>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('admin.sliders.create')}}">
+                <i class="mdi mdi-chart-pie menu-icon"></i>
+                <span class="menu-title">Sliders</span>
+            </a>
+        </li>
     </ul>
 </nav>
