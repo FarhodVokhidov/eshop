@@ -170,12 +170,14 @@ class ProductController extends Controller
             }
             if($request->colors){
                 foreach ($request->colors as $key =>$color){
-                    $product->prodcutColors()->create([
+                    $fara=$product->prodcutColors()->create([
                         'product_id' => $product->id,
                         'color_id'=>$color,
-                        'quantity'=>$request->colorquantity[$key]?? 0,
+                        'quantity'=>$request->colorquantity[$key] ?? 0,
                     ]);
+
                 }
+
             }
             return redirect('admin/product')->with('message', 'Product Updated Successfully');
 

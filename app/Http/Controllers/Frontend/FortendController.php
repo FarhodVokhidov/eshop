@@ -19,9 +19,25 @@ class FortendController extends Controller
     }
     public function product_by_category($category_slug){
         $category = Category::query()->where('slug',$category_slug)->first();
+
         if($category){
-            $products = $category->products()->get();
-            return view('frontend.collection.products.index',compact('products','category'));
+
+            return view('frontend.collection.products.index',compact('category'));
+        }else{
+            return redirect()->back();
+        }
+    }
+    public function productView(string $category_slug, string $product_slug){
+        $category = Category::query()->where('slug',$category_slug)->first();
+
+        if($category){
+            $product = $category->products()->where('slug',$product_slug)->where('status','1')->first();
+            if ($product){
+                return view('frontend.collection.products.view',compact('product','category'));
+            }else{
+                return redirect()->back();
+            }
+
         }else{
             return redirect()->back();
         }

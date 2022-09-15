@@ -2,18 +2,40 @@
 
 namespace App\Http\Livewire\Frontend\Prodcut;
 
+use App\Models\Product;
 use Livewire\Component;
+use function Symfony\Component\Translation\t;
 
 class Index extends Component
 {
-    public $products, $category;
-    public function mount($products,$category){
-        $this->products =$products;
+    public $products, $category,$brandInputs=[],$priceInput;
+    protected $queryString = [
+        'brandInputs'=> ['except' => '', 'as' => 'brand'],
+        'priceInput'=> ['except' => '', 'as' => 'price'],
+    ];
+    public function mount($category){
+
         $this->category = $category;
 
     }
     public function render()
     {
-        return view('livewire.frontend.prodcut.index');
+        $this->products = Product::query()->where('category_id',$this->category->id)
+            ->when($this->brandInputs,function ($q){
+                              $q->whereIn('brand',$this->brandInputs);
+                           })
+            ->when($this->priceInput,function ($q){
+                              $q->when($this->priceInput=='high-to-low',function ($q1){
+                                  $q1->orderBy('selling_price','DESC');
+                              })->when($this->priceInput=='low-to-high',function ($q1){
+                                  $q1->orderBy('selling_price','ASC');
+                              });
+                           })
+            ->where('status','1')
+            ->get();
+        return view('livewire.frontend.prodcut.index',[
+            'products'=>$this->products,
+            'category'=>$this->category,
+        ]);
     }
 }

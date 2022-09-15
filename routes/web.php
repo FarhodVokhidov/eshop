@@ -23,6 +23,7 @@ Route::get('/',[\App\Http\Controllers\Frontend\FortendController::class,'index']
 Route::get('/collection',[App\Http\Controllers\Frontend\FortendController::class,'categories'])->name('categories');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/collection/{category_slug}',[App\Http\Controllers\Frontend\FortendController::class,'product_by_category'])->name('productcat');
+Route::get('/collection/{category_slug}/{product_slug}',[App\Http\Controllers\Frontend\FortendController::class,'productView'])->name('productview');
 
 Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     Route::get('dashboard',[\App\Http\Controllers\Admin\DashboardController::class,'index'])->name('admin.home');
