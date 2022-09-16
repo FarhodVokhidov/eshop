@@ -170,7 +170,7 @@ class ProductController extends Controller
             }
             if($request->colors){
                 foreach ($request->colors as $key =>$color){
-                    $fara=$product->prodcutColors()->create([
+                    $fara=$product->prodcutColors()->updated([
                         'product_id' => $product->id,
                         'color_id'=>$color,
                         'quantity'=>$request->colorquantity[$key] ?? 0,
