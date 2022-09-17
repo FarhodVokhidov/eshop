@@ -10,7 +10,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <lablel>Select Category</lablel>
-                        <select name="category_id" required class="form-control">
+                        <select wire:model.defer="category_id" required class="form-control">
                             <option value="">__Select Category</option>
                             @foreach($categories as $category)
                                 <option value="{{$category->id}}">{{$category->name}}</option>
@@ -68,9 +68,9 @@
                             <lablel>Select Category</lablel>
                             <select wire:model.defer="category_id" required class="form-control">
                                 <option value="">__Select Category</option>
-                                @foreach($categories as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                @endforeach
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endforeach
                             </select>
                             @error('category_id') <small class="text-danger">{{$message}}</small>@enderror
 

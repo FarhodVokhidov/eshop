@@ -64,7 +64,9 @@
                             </div>
                         </div>
                         <div class="mt-2">
-                            <a href="" class="btn btn1"> <i class="fa fa-shopping-cart"></i> Add To Cart</a>
+                            <button type="button" wire:click="addToCart({{$product->id}})" class="btn btn1">
+                                <i class="fa fa-shopping-cart"></i> Add To Cart
+                            </button>
                             <button type="button" wire:click="addWishlist({{$product->id}})" class="btn btn1">
                                 <span wire:loading.remove wire:target="addWishlist">
                                 <i class="fa fa-heart"></i> Add To Wishlist
@@ -77,7 +79,7 @@
                         <div class="mt-3">
                             <h5 class="mb-0">Small Description</h5>
                             <p>
-                                {{!! $product->small_description }}
+                                {{$product->small_description }}
                             </p>
                         </div>
                     </div>
@@ -90,7 +92,7 @@
                             <h4>Description</h4>
                         </div>
                         <div class="card-body">
-                            <p>{{ !! $product->description }}</p>
+                            <p>{{ $product->description }}</p>
                         </div>
                     </div>
                 </div>

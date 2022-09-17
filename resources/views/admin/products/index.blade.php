@@ -41,15 +41,13 @@
                                     @endif
                                 </td>
                                 <td>{{$product->name}}</td>
-                                <td class="d-flex justify-content-between">@if($product->selling_price)
+                                <td >
+                                    @if($product->selling_price)
                                         <div class="">
-                                            <h6>{{$product->selling_price}}</h6>
-                                        </div>
-                                        <div>
-                                               <h6 class="bg-google">Sale</h6>
+                                            <h6>{{$product->selling_price}} <a  class="float-end nav-link text-white  border-lg rounded-circle p-2  " style="background-color: #0e4cfd">Sell</a></h6>
                                         </div>
                                     @else
-                                                                                {{$product->original_price}}
+                                        {{$product->original_price}}
                                     @endif
                                 </td>
                                 <td>{{$product->quantity}}</td>
