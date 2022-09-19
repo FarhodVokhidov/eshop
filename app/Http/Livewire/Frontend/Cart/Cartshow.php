@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class Cartshow extends Component
 {
-    public $cart, $cartQuantity;
+    public $cart;
 
     public function decrementQuantity($catid)
     {
@@ -103,6 +103,24 @@ class Cartshow extends Component
             ]);
         }
 
+    }
+    public function deleteCart($cartId){
+       $cartRemove = Cart::query()->where('id',$cartId)->where('user_id',auth()->user()->id)->first();
+       if ($cartRemove){
+           $cartRemove->delete();
+           $this->dispatchBrowserEvent('message', [
+               'text' => 'Product Delete in Cart',
+               'type' => 'success',
+               'status' => 200
+           ]);
+       }
+       else{
+           $this->dispatchBrowserEvent('message', [
+               'text' => 'Something Went Wrong',
+               'type' => 'error',
+               'status' => 500
+           ]);
+       }
     }
 
     public function render()

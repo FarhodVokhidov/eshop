@@ -70,9 +70,15 @@
                                         </div>
                                         <div class="col-md-2 col-5 my-auto">
                                             <div class="remove">
-                                                <a href="" class="btn btn-danger btn-sm">
-                                                    <i class="fa fa-trash"></i> Remove
-                                                </a>
+                                                <button type="button" wire:loading.attr="disabled" wire:click="deleteCart({{$cartItem->id}})" href="" class="btn btn-danger btn-sm">
+                                                    <span wire:loading.remove wire:click="deleteCart({{$cartItem->id}})">
+                                                                <i class="fa fa-trash"></i> Remove
+                                                    </span>
+                                                    <span wire:loading wire:click="deleteCart({{$cartItem->id}})">
+                                                                <i class="fa fa-trash"></i> Removing
+                                                    </span>
+
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
