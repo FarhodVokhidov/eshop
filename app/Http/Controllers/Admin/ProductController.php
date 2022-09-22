@@ -91,7 +91,7 @@ class ProductController extends BaseController
     {
         $validatedData = $request->validated();
        $this->service->Productupdated($validatedData,$request,$product);
-        if ($this->service->updated($validatedData,$request,$product)==true){
+        if ($this->service->Productupdated($validatedData,$request,$product)==true){
             return redirect('admin/product')->with('message', 'Product Updated Successfully');
         }
         else{

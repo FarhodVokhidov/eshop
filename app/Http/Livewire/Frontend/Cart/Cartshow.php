@@ -16,7 +16,15 @@ class Cartshow extends Component
         if ($cartData) {
             if ($cartData->productColor()->where('id', $cartData->product_color_id)->exists()) {
                 $productColor = $cartData->productColor()->where('id', $cartData->product_color_id)->first();
-                if ($productColor->qunatity > $cartData->quantity) {
+                if ($cartData->quantity<=0){
+                    $this->dispatchBrowserEvent('message', [
+                        'text' => 'Quantity only increment',
+                        'type' => 'success',
+                        'status' => 200
+                    ]);
+                    $cartData->increment('quantity',0);
+                }
+                elseif ($productColor->quantity >= $cartData->quantity && $cartData->quantity>=0) {
                     $cartData->decrement('quantity');
                     $this->dispatchBrowserEvent('message', [
                         'text' => 'Quantity updated',
@@ -26,13 +34,22 @@ class Cartshow extends Component
                 }
                 else{
                     $this->dispatchBrowserEvent('message', [
-                        'text' => 'Only'.$productColor->qunatity.'Quantity available',
+                        'text' => 'Only'.$productColor->quantity.'Quantity available',
                         'type' => 'success',
                         'status' => 200
                     ]);
                 }
-            } else {
-                if ($cartData->product->quantity > $cartData->qunatity) {
+            }
+            else {
+                if ($cartData->quantity<=0){
+                    $this->dispatchBrowserEvent('message', [
+                        'text' => 'Quantity only increment',
+                        'type' => 'error',
+                        'status' => 200
+                    ]);
+                    $cartData->increment('quantity',0);
+                }
+                elseif ($cartData->product->quantity >= $cartData->quantity) {
                     $cartData->decrement('quantity');
                     $this->dispatchBrowserEvent('message', [
                         'text' => 'Quantity updated',
@@ -42,8 +59,8 @@ class Cartshow extends Component
                 }
                 else{
                     $this->dispatchBrowserEvent('message', [
-                        'text' => 'Only'.$cartData->product->quantity.'Quantity available',
-                        'type' => 'success',
+                        'text' => 'Only '.$cartData->product->quantity.' Quantity available',
+                        'type' => 'warning',
                         'status' => 200
                     ]);
                 }
@@ -63,7 +80,7 @@ class Cartshow extends Component
         if ($cartData) {
             if ($cartData->productColor()->where('id', $cartData->product_color_id)->exists()) {
                 $productColor = $cartData->productColor()->where('id', $cartData->product_color_id)->first();
-                if ($productColor->qunatity > $cartData->quantity) {
+                if ($productColor->quantity > $cartData->quantity) {
                     $cartData->increment('quantity');
                     $this->dispatchBrowserEvent('message', [
                         'text' => 'Quantity updated',
@@ -73,13 +90,13 @@ class Cartshow extends Component
                 }
                 else{
                     $this->dispatchBrowserEvent('message', [
-                        'text' => 'Only'.$productColor->qunatity.'Quantity available',
+                        'text' => 'Only '.$productColor->quantity.' Quantity available',
                         'type' => 'success',
                         'status' => 200
                     ]);
                 }
             } else {
-                if ($cartData->product->quantity > $cartData->qunatity) {
+                if ($cartData->product->quantity > $cartData->quantity) {
                     $cartData->increment('quantity');
                     $this->dispatchBrowserEvent('message', [
                         'text' => 'Quantity updated',
