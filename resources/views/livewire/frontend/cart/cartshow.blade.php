@@ -56,7 +56,7 @@
                                             <div class="quantity">
                                                 <div class="input-group">
                                                     <button type="button"    wire:click="decrementQuantity({{$cartItem->id}})" class="btn  btn-danger "><i class="fa fa-minus"></i></button>
-                                                    <input type="button" value="{{$cartItem->quantity}}" class="input-quantity"/>
+                                                    <button type="button" value="" class="input-quantity btn btn-secondary">{{$cartItem->quantity}}</button>
                                                     <button type="button"  wire:click="incrementQuantity({{$cartItem->id}})" class="btn btn-success"><i class="fa fa-plus"></i></button>
                                                 </div>
                                             </div>
