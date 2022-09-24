@@ -116,10 +116,7 @@
 {{--        </div>--}}
 {{--    </nav>--}}
 {{--</div>--}}
-    <nav class="navbar navbar-expand-lg">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="toggle-navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav class="navbar navbar-expand-lg flex">
         <div class="collapse navbar-collapse text-white" id="navbar-content">
             <ul class="navbar-nav">
                 <li class="nav-item ">
@@ -128,17 +125,12 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" href="{{route('categories')}}">All Categories</a>
                 </li>
+            </ul>
+        </div>
+        <div>
+            <ul class="navbar-nav float-end">
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="{{url('/new-arrivals')}}">Products</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Contacts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Blogs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white " href="{{url('cart')}}">
+                    <a class="nav-link text-white" href="{{url('cart')}}">
                         <i class="fa fa-shopping-cart"></i> Cart <livewire:frontend.cart.cart-count />
                     </a>
                 </li>
@@ -166,6 +158,10 @@
                            data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-user"></i>  {{ Auth::user()->name }}
                         </a>
+                        @if(Auth::user()->role_as == 1)
+                            <a href="{{route('admin.home')}}" class="nav-link btn btn-behance">Dashboard</a>
+                        @endif
+
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a></li>
                             <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i> My Orders</a></li>
@@ -188,16 +184,4 @@
                 @endguest
             </ul>
         </div>
-        <div class="col-md-5 my-auto">
-            <ul class="nav justify-content-end">
-
-
-
-
-            </ul>
-        </div>
     </nav>
-    <div class="box">
-        <div class="box-1"></div>
-        <div class="box-2"></div>
-    </div>

@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="{{asset('admin/images/favicon.png')}}" />
-
     @livewireStyles
 </head>
 <body>
