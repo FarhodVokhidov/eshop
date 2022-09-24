@@ -87,16 +87,66 @@ class ProductController extends BaseController
      * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductFormRequest $request, $product)
+    public function update(ProductFormRequest $request, $product_id)
     {
         $validatedData = $request->validated();
-       $this->service->Productupdated($validatedData,$request,$product);
-        if ($this->service->Productupdated($validatedData,$request,$product)==true){
-            return redirect('admin/product')->with('message', 'Product Updated Successfully');
-        }
-        else{
+//       $this->service->Productupdated($validatedData,$request,$product_id);
+//        if ($this->service->Productupdated($validatedData,$request,$product_id) == true){
+//            return redirect('admin/product')->with('message', 'Product Updated Successfully');
+//        }
+//        else{
+//            return redirect(route('admin.product'))->with('message', 'No Such Product Id Found');
+//        }
+        $product = Category::query()->findOrFail($validatedData['category_id'])
+            ->products()->where('id', $product_id)->first();
+        if ($product) {
+            $product->update([
+                'category_id' => $validatedData['category_id'],
+                'name' => $validatedData['name'],
+                'slug' => Str::slug($validatedData['slug']),
+                'brand' => $validatedData['brand'],
+                'small_description' => $validatedData['small_description'],
+                'description' => $validatedData['description'],
+                'original_price' => $validatedData['original_price'],
+                'selling_price' => $validatedData['selling_price'],
+                'quantity' => $validatedData['quantity'],
+                'trending' => $request->trending == true ? "1" : "0",
+                'status' => $request->status == true ? "1" : "0",
+                'meta_title' => $validatedData['meta_title'],
+                'meta_keyword' => $validatedData['meta_keyword'],
+                'meta_description' => $validatedData['meta_description'],
+            ]);
+            if ($request->hasFile('image')) {
+                $uploadPath = 'upload/products/';
+                $i = 0;
+                foreach ($request->file('image') as $imageFile) {
+                    $extention = $imageFile->getClientOriginalExtension();
+                    $filename = time() . $i++ . '.' . $extention;
+                    $imageFile->move($uploadPath, $filename);
+                    $finalImagePathName = $uploadPath . $filename;
+                    $product->productImages()->create([
+                        'product_id' => $product->id,
+                        'image' => $finalImagePathName,
+                    ]);
+                }
+            }
+            if($request->colors){
+                foreach ($request->colors as $key =>$color){
+                    $fara=$product->prodcutColors()->update([
+                        'product_id' => $product->id,
+                        'color_id'=>$color,
+                        'quantity'=>$request->colorquantity[$key] ?? 0,
+                    ]);
+
+                }
+
+            }
+            return redirect('admin/product')->with('message', 'Product Updated Successfully');;
+
+        } else {
             return redirect(route('admin.product'))->with('message', 'No Such Product Id Found');
         }
+
 
     }
 
@@ -120,7 +170,7 @@ class ProductController extends BaseController
         return redirect()->back()->with('message', 'Product Deleted Successfully');
     }
 
-    public function destroyImage(int $product)
+    public function destroyImage($product)
     {
         $productImage = ProductImage::query()->findOrFail($product);
         if (File::exists($productImage->image)) {
