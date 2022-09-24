@@ -116,7 +116,6 @@
 {{--        </div>--}}
 {{--    </nav>--}}
 {{--</div>--}}
-<header>
     <nav class="navbar navbar-expand-lg">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="toggle-navigation">
             <span class="navbar-toggler-icon"></span>
@@ -202,5 +201,3 @@
         <div class="box-1"></div>
         <div class="box-2"></div>
     </div>
-</header>
-

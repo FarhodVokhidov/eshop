@@ -27,7 +27,9 @@
 </head>
 <body>
 <div id="app">
-    @include('layouts.inc.frontedn.navbar')
+    <header>
+        @include('layouts.inc.frontedn.navbar')
+    </header>
     <main>
         @yield('content')
     </main>
