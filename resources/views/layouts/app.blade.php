@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
     <!-- Default theme -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    <!-- Add the slick-theme.css if you want default styling -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
     <!-- Scripts -->
     @livewireStyles
@@ -35,15 +37,17 @@
     </main>
     @include('layouts.inc.frontedn.footer')
 </div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
 <script>
     window.addEventListener('message', event => {
         alertify.set('notifier', 'position', 'top-right');
         alertify.notify(event.detail.text, event.detail.type);
     })
-</script>
+    </script>
 @yield('scripts')
 @livewireScripts
 </body>

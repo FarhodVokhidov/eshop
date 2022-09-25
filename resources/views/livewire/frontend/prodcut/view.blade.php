@@ -7,9 +7,29 @@
                 </div>
             @endif
             <div class="row">
-                <div class="col-md-5 mt-3">
+                <div class="col-md-5 mt-3 carousel slide" id="carouselExampleCaptions" data-bs-ride="false">
                     <div class="bg-white border">
-                        <img src="{{asset($product->productImages[0]->image)}}" class="w-100" alt="Img">
+                        <div class="carousel-inner">
+                            @foreach($product->productImages as $key=>$slider)
+                                <div class="carousel-item {{$key == 0 ? 'active':''}}">
+                                    <img src="{{asset($slider->image)}}" style="height: 400px" class="d-block w-100"
+                                         alt="...">
+                                    <div class="carousel-caption d-none d-md-block">
+
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
                 </div>
                 <div class="col-md-7 mt-3">
@@ -115,23 +135,25 @@
                     </form>
 
                     <div id="task-comments" class="pt-4">
+                        <h1>Комментария</h1>
                         @foreach($product->comments as $comment)
-                        <div
-                            class="bg-white rounded-lg p-3  flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
-                            <div class="flex flex-row justify-center mr-2">
-                                <h3 class="text-purple-600 font-semibold text-lg">{{$comment->user->name}}</h3>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-10">
-                                    <p style="width: 90%" class="text-gray-600 text-lg md:text-left ">{{$comment->text}}</p>
+                            <div
+                                class="bg-white rounded-lg p-3  flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
+                                <div class="flex flex-row justify-center mr-2">
+                                    <h3 class="text-purple-600 font-semibold text-lg">{{$comment->user->name}}</h3>
                                 </div>
-                                <div class="col-md-2 text-center">
-                                    {{$comment->created_at}}
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <p style="width: 90%"
+                                           class="text-gray-600 text-lg md:text-left ">{{$comment->text}}</p>
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        {{$comment->created_at}}
+                                    </div>
+
                                 </div>
 
                             </div>
-
-                        </div>
                         @endforeach
                     </div>
                 </section>
