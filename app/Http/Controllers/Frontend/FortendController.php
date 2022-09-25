@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CommentForm;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 
@@ -42,4 +44,11 @@ class FortendController extends Controller
             return redirect()->back();
         }
     }
+    public function comment(CommentForm $request,$id){
+        $product = Product::query()->findOrFail($id);
+        $validatetData = $request->validated();
+        $product->comments()->create($validatetData);
+        return redirect(route('productview',[$product->category->slug,$product->slug]));
+    }
+
 }

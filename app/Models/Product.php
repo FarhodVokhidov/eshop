@@ -32,6 +32,9 @@ class Product extends Model
         return $this->hasMany(ProductImage::class,'product_id','id');
     }
     public function prodcutColors(){
-        return$this->hasMany(ProductColor::class,'product_id','id');
+        return $this->hasMany(ProductColor::class,'product_id','id');
+    }
+    public function comments(){
+        return $this->hasMany(Comment::class,'product_id','id')->orderBy('created_at');
     }
 }

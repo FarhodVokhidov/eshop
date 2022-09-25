@@ -58,9 +58,10 @@
                         </div>
                         <div class="mt-2">
                             <div class="input-group">
-                                <span class="btn btn1" wire:click = "decrementQuantity"><i class="fa fa-minus"></i></span>
-                                <input type="text" value="{{$this->quantityCount}}" readonly wire:model = "quantityCount" class="input-quantity"/>
-                                <span class="btn btn1" wire:click = "icrementQuantity"><i class="fa fa-plus"></i></span>
+                                <span class="btn btn1" wire:click="decrementQuantity"><i class="fa fa-minus"></i></span>
+                                <input type="text" value="{{$this->quantityCount}}" readonly wire:model="quantityCount"
+                                       class="input-quantity"/>
+                                <span class="btn btn1" wire:click="icrementQuantity"><i class="fa fa-plus"></i></span>
                             </div>
                         </div>
                         <div class="mt-2">
@@ -96,6 +97,44 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div>
+                <section class="rounded-b-lg mt-4">
+                    <form method="POST" action="{{route('comment',$product->id)}}">
+                        @csrf
+
+                        <textarea name="text" class="w-100 form-control "
+                                  placeholder="Ваш комментарий..." spellcheck="false"></textarea>
+                        @error('text')
+                        <p class="text-danger">{{$message}}</p>
+                        @enderror
+                        <button type="submit"
+                                class="btn btn-success">
+                            Написать
+                        </button>
+                    </form>
+
+                    <div id="task-comments" class="pt-4">
+                        @foreach($product->comments as $comment)
+                        <div
+                            class="bg-white rounded-lg p-3  flex flex-col justify-center items-center md:items-start shadow-lg mb-4">
+                            <div class="flex flex-row justify-center mr-2">
+                                <h3 class="text-purple-600 font-semibold text-lg">{{$comment->user->name}}</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <p style="width: 90%" class="text-gray-600 text-lg md:text-left ">{{$comment->text}}</p>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    {{$comment->created_at}}
+                                </div>
+
+                            </div>
+
+                        </div>
+                        @endforeach
+                    </div>
+                </section>
             </div>
         </div>
     </div>

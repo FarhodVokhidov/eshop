@@ -25,9 +25,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/collection/{category_slug}',[App\Http\Controllers\Frontend\FortendController::class,'product_by_category'])->name('productcat');
 Route::get('/collection/{category_slug}/{product_slug}',[App\Http\Controllers\Frontend\FortendController::class,'productView'])->name('productview');
 
+
 Route::middleware(['auth'])->group(function (){
     Route::get('/wishlist',[\App\Http\Controllers\Frontend\WishlistController::class,'index']);
     Route::get('cart',[\App\Http\Controllers\Frontend\CartController::class,'index']);
+    Route::post('product/comment/{id}',[App\Http\Controllers\Frontend\FortendController::class,'comment'])->name('comment');
 });
 Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     Route::get('dashboard',[\App\Http\Controllers\Admin\DashboardController::class,'index'])->name('admin.home');

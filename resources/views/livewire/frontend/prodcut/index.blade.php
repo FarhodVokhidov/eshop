@@ -43,8 +43,11 @@
                                 @endif
                                 @if($product->productImages->count()>0)
                                     <a href="{{url('/collection/'.$category->slug.'/'.$product->slug)}}">
-                                        <img src="{{asset($product->productImages[0]->image)}}" width="400" height="400"
-                                             class="img-fluid" alt="Laptop">
+                                        <div class="w-100">
+                                            <img src="{{asset($product->productImages[0]->image)}}" width="400" height="600"
+                                                 class="img-thumbnail" alt="Laptop">
+                                        </div>
+
                                     </a>
                                 @endif
 
@@ -57,8 +60,12 @@
                                     </a>
                                 </h5>
                                 <div>
+                                    @if($product->selling_price==0)
+                                        <span class="selling-price">{{$product->original_price}}</span>
+                                    @else
                                     <span class="selling-price">{{$product->selling_price}}</span>
-                                    <span class="original-price">{{$product->original_price}}</span>
+                                        <span class="original-price">{{$product->original_price}}</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
