@@ -13,6 +13,7 @@ use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Yajra\DataTables\DataTables;
 
 class ProductController extends BaseController
 {
@@ -21,10 +22,19 @@ class ProductController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::query()->paginate(10);
-        return view('admin.products.index', compact('products'));
+        if ($request->ajax()) {
+            $data = Product::query()->select('id','category_id','name','original_price','quantity','status');
+            return DataTables::of($data)->addIndexColumn()
+                ->addColumn('action',function ($data){
+                    $button = '<a href="product/'.$data->id.'/edit" class="btn btn-success">Edit</a>';
+                    $button .= '<a href="product/'.$data->id.'/delete" class="btn btn-danger">Delete</a>';
+                    return $button;
+                })->make(true);
+        }
+//        $products = Product::query()->paginate(10);
+        return view('admin.products.index',);
     }
 
     /**

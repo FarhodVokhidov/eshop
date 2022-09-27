@@ -12,6 +12,8 @@
 
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
+
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -21,25 +23,26 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
     <!-- Default theme -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     <!-- Add the slick-theme.css if you want default styling -->
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-
     <!-- Scripts -->
     @livewireStyles
 </head>
 <body>
-<div id="app">
-    <header>
-        @include('layouts.inc.frontedn.navbar')
-    </header>
-    <main>
-        @yield('content')
-    </main>
-    @include('layouts.inc.frontedn.footer')
-</div>
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 
+
+@include('layouts.inc.frontedn.navbar')
+
+<div id="app">
+    @yield('content')
+
+</div>
+<footer>
+    @include('layouts.inc.frontedn.footer')
+</footer>
+@yield('scripts')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" crossorigin="anonymous"></script>
 <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
 <script>
@@ -47,8 +50,8 @@
         alertify.set('notifier', 'position', 'top-right');
         alertify.notify(event.detail.text, event.detail.type);
     })
-    </script>
-@yield('scripts')
+</script>
+
 @livewireScripts
 </body>
 </html>
