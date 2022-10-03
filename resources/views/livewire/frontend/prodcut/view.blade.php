@@ -114,6 +114,7 @@
                         </div>
                         <div class="card-body">
                             <p>{{ $product->description }}</p>
+                            <p>Ваша отсенка {{$rate->ratings}}</p>
                         </div>
                     </div>
                 </div>

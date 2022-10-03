@@ -7,7 +7,9 @@ use App\Http\Requests\CommentForm;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Slider;
+use App\Models\User;
 use Illuminate\Http\Request;
+use willvincent\Rateable\Rating;
 
 class FortendController extends Controller
 {
@@ -31,11 +33,12 @@ class FortendController extends Controller
     }
     public function productView(string $category_slug, string $product_slug){
         $category = Category::query()->where('slug',$category_slug)->first();
-
+        $rate = Rating::query()->where('id',);
+        dd($category->products);
         if($category){
             $product = $category->products()->where('slug',$product_slug)->where('status','1')->first();
             if ($product){
-                return view('frontend.collection.products.view',compact('product','category'));
+                return view('frontend.collection.products.view',compact('product','category','rate'));
             }else{
                 return redirect()->back();
             }

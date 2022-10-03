@@ -24,6 +24,8 @@ class ProductController extends BaseController
      */
     public function index(Request $request)
     {
+        $post= Product::query()->first();
+        $post->rate(5);
         if ($request->ajax()) {
             $data = Product::query()->select('id','category_id','name','original_price','quantity','status');
             return DataTables::of($data)->addIndexColumn()
